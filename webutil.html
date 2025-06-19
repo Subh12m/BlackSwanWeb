@@ -305,7 +305,7 @@
       }
     }
 
-    /* === ADDED FIX FOR CONSISTENT BOX WIDTH --- Surja15 === */
+    /* === ADDED FIX FOR CONSISTENT BOX WIDTH === */
     .glassbar,
     .url-checker-box {
       width: 720px;
@@ -344,6 +344,7 @@ input[type="range"] {
     <a href="index.html">Home</a>
     <a href="#url">URL Safety Checker</a>
     <a href="#password">Password Generator</a>
+    <a href="#qrgen">QR Generator</a>
   </div>
 </div>
 
@@ -522,5 +523,34 @@ input[type="range"] {
       document.getElementById('passwordOutput').value = password;
     }
   </script>
+  <!-- QR Code Generator -->
+<section class="panel">
+  <div class="glassbar url-checker-box" id="qrgen">
+    <h2>📷 QR Code Generator</h2>
+    <input type="text" id="qrText" placeholder="Enter text or URL for QR code" />
+    <button onclick="generateQR()">Generate QR Code</button>
+    <div id="qrResult" style="margin-top: 20px; text-align: center;"></div>
+  </div>
+</section>
+<script>
+  function generateQR() {
+    const text = document.getElementById('qrText').value.trim();
+    const qrDiv = document.getElementById('qrResult');
+
+    if (!text) {
+      qrDiv.innerHTML = '<span style="color: #f88;">⚠️ Please enter some text.</span>';
+      return;
+    }
+
+    // Clear previous result
+    qrDiv.innerHTML = '';
+
+    const qrCode = document.createElement('img');
+    qrCode.src = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(text)}&size=200x200`;
+    qrCode.alt = "QR Code";
+
+    qrDiv.appendChild(qrCode);
+  }
+</script>
 </body>
 </html>

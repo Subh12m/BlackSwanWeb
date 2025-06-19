@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>URL & Password Tool</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   <style>
+    :root {
+  --primary: #000000;
+  --secondary: #111111;
+  --accent: #1a1a1a;
+  --highlight: #ff4d4d; /* was pinkish, now light red */
+  --white: #ffffff;
+}
+    .popup {
+      background-color: var(--highlight); /* this will now be red-ish */
+    }
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
@@ -13,20 +23,27 @@
       overflow-x: hidden;
     }
 
-    h2 {
-      color: #FFB6C1;
+   h2 {
+  color: #ff4d4d;  /* Light red */
+}
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: twinkle 2s infinite alternate;
     }
-
-    .stars {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: 0;
-      background: transparent;
-      opacity: 0.2;
-      pointer-events: none;
+    @keyframes twinkle {
+      0% {
+        opacity: 0.1;
+        transform: scale(0.9);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1.1);
+      }
     }
 
     .navbar {
@@ -54,37 +71,36 @@
       font-size: 1.2rem;
       font-weight: 700;
     }
-
+    /*hover color effect (white to #e94560) for the top navigation links */
     .navbar .right a {
-      color: #ff8ac7;
+      color: white;
       text-decoration: none;
       margin-left: 20px;
       font-weight: 500;
-      transition: all 0.3s ease;
+      transition: color 0.3s ease;
     }
 
     .navbar .right a:hover {
-      text-shadow: 0 0 8px #ffb6c1;
-      color: #fff;
+      color: #e94560;
     }
 
-    .glassbar {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 20px;
-      width: 60vw; /* try 70vw or 80vw if needed */
-  max-width: 700px;
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      padding: 25px;
-      margin-bottom: 2rem;
-      box-shadow: 0 0 10px rgba(255, 20, 147, 0.15);
-      position: relative;
-      transition: box-shadow 0.3s ease;
-      overflow-y: auto;
+    .glassbar button {
+      background: var(--highlight);
+      color: var(--white);
+      border: none;
+      border-radius: 30px;
+      padding: 12px 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      width: 100%;
+      cursor: pointer;
+      margin-bottom: 12px;
+      transition: background 0.3s, box-shadow 0.3s;
     }
 
-    .glassbar:hover {
-      box-shadow: 0 0 20px rgba(255, 20, 147, 0.35);
+    .glassbar button:hover {
+      background: #ff5a7a;
+      box-shadow: 0 0 12px rgba(233, 69, 96, 0.5);
     }
 
     input[type="text"],
@@ -115,6 +131,48 @@
       background: #ff69b4;
       box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
     }
+    .url-checker-box button {
+      background: var(--highlight);
+      color: var(--white);
+      border: none;
+      border-radius: 30px; /*  This makes the button rounded */
+      padding: 12px 0; /* This gives height and vertical space */
+      font-size: 1.1rem;
+      font-weight: 600;
+      width: 100%; /*  This ensures full width (no shrinking) */
+      cursor: pointer;
+      margin-bottom: 12px;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .url-checker-box button:hover {
+      background: #ff5a7a; /* slightly lighter pinkish highlight */
+      box-shadow: 0 0 12px rgba(233, 69, 96, 0.5);
+    }
+.glassbar,
+.url-checker-box {
+  background: rgba(255, 255, 255, 0.05); /* translucent background */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1); /* subtle border */
+  box-shadow: 0 0 20px rgba(233, 69, 96, 0.2); /* soft glow */
+  border-radius: 20px;
+  padding: 24px;
+  width: 600px;
+  max-width: 95vw;
+  box-sizing: border-box;
+}
+.panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 2rem;
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
 
     .result {
       padding: 15px;
@@ -137,15 +195,15 @@
       color: #f2a9b6;
     }
 
-   .section {
-  margin-bottom: 6rem;
-  animation: fadeIn 1.2s ease-in;
-  scroll-snap-align: start;
-}
-.checkbox-group:hover {
-  gap: 14px;
-  transform: translateX(5px);
-}
+    .section {
+      margin-bottom: 6rem;
+      animation: fadeIn 1.2s ease-in;
+      scroll-snap-align: start;
+    }
+    .checkbox-group:hover {
+      gap: 14px;
+      transform: translateX(5px);
+    }
     .checkbox-group {
       display: flex;
       align-items: center;
@@ -168,147 +226,189 @@
       font-size: 15px;
     }
     .section {
-  margin-bottom: 6rem; /* more vertical space */
-  animation: fadeIn 1.2s ease-in;
-}
+      margin-bottom: 6rem; /* more vertical space */
+      animation: fadeIn 1.2s ease-in;
+    }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-/* === FULLSCREEN SECTIONS WITH SCROLL SNAP === */
-html, body {
-  height: 100%;
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-}
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    /* === FULLSCREEN SECTIONS WITH SCROLL SNAP === */
+    html,
+    body {
+      height: 100%;
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+    }
 
-/* Each section fills the screen */
-.panel {
-  height: 200vh;
-  scroll-snap-align: start;
-  overflow-y: auto; /* Allow internal scroll */
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* Align to top so all content is visible */
-  padding-top: 15rem; /* Give space from top */
-}
+    .panel {
+      height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      justify-content: center;
+      align-items: center; /* centers vertically */
+      padding: 2rem;
+    }
 
-/* Optional: smoother section transitions */
-html {
-  scroll-behavior: smooth;
-}
-/* Twinkling Stars Background */
-.stars {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-}
+    /* Optional: smoother section transitions */
+    html {
+      scroll-behavior: smooth;
+    }
+    /* Twinkling Stars Background */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
 
-.star {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: white;
-  border-radius: 50%;
-  opacity: 0.3;
-  animation: twinkle 2s infinite alternate;
-}
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: twinkle 2s infinite alternate;
+    }
 
-@keyframes twinkle {
-  0% {
-    opacity: 0.1;
-    transform: scale(0.9);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-}
+    @keyframes twinkle {
+      0% {
+        opacity: 0.1;
+        transform: scale(0.9);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+    }
 
+    @media (max-width: 700px) {
+      .glassbar,
+      .url-checker-box {
+        width: 95vw;
+        padding: 15px;
+      }
+      .url-checker-box {
+        padding: 18px 8px 12px 8px;
+      }
+    }
+
+    /* === ADDED FIX FOR CONSISTENT BOX WIDTH --- Surja15 === */
+    .glassbar,
+    .url-checker-box {
+      width: 720px;
+      
+      max-width: 95vw;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+    .url-checker-box input[type="text"] {
+  padding: 10px 15px; /* Add horizontal spacing */
+  box-sizing: border-box; /* Ensures padding stays inside 100% width */
+}
+input[type="range"] {
+  padding: 0 12px;         /* adds horizontal padding */
+  box-sizing: border-box; /* ensures padding stays within width */
+}
 
 
   </style>
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 <body>
-<div class="stars" id="stars"></div>
-
+  <div class="stars" id="stars"></div>
 
   <!-- Top Navigation Bar -->
-  <div class="navbar">
-    <div class="left">✨ Black Swan  AV</div>
-    <div class="right">
-<a href="index.html">Home</a>
-      <a href="#url">URL Safety Checker</a>
-      <a href="#password">Password Generator</a>
-    </div>
+ <div class="navbar">
+  <div class="left">
+    <span class="material-icons" style="font-size: 24px; color: white; vertical-align: middle; margin-right: 8px;">
+      auto_awesome
+    </span>
+    Black Swan AV
   </div>
+  <div class="right">
+    <a href="index.html">Home</a>
+    <a href="#url">URL Safety Checker</a>
+    <a href="#password">Password Generator</a>
+  </div>
+</div>
+
+
 
   <!-- URL Checker -->
-<section class="panel">
-  <div class="glassbar" id="url">
-    <h2>🔗 URL Safety Checker</h2>
-    <input type="text" id="urlInput" placeholder="Enter a URL to check">
-    <button onclick="checkURL()">Check URL</button>
-    <div id="result" class="result" style="display:none;"></div>
-  </div>
-</section>
-
-<!-- Password Generator -->
-<section class="panel">
-  <div class="glassbar" id="password">
-    <h2>🔐 Password Generator</h2>
-    
-    <div class="checkbox-group">
-      <input type="checkbox" id="includeUpper" checked>
-      <label for="includeUpper">Include Uppercase Letters</label>
+  <section class="panel">
+    <div class="glassbar url-checker-box" id="url">  
+      <h2>🔗 URL Safety Checker</h2>
+      <input type="text" id="urlInput" placeholder="Enter a URL to check" />
+      <button onclick="checkURL()">Check URL</button>
+      <div id="result" class="result" style="display:none;"></div>
     </div>
-    <div class="checkbox-group">
-      <input type="checkbox" id="includeLower" checked>
-      <label for="includeLower">Include Lowercase Letters</label>
-    </div>
-    <div class="checkbox-group">
-      <input type="checkbox" id="includeNumbers" checked>
-      <label for="includeNumbers">Include Numbers</label>
-    </div>
-    <div class="checkbox-group">
-      <input type="checkbox" id="includeSymbols">
-      <label for="includeSymbols">Include Symbols</label>
+  </section>
+
+  <!-- Password Generator -->
+  <section class="panel password-section">
+    <div class="glassbar url-checker-box" id="password">
+      <h2>🔐 Password Generator</h2>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="includeUpper" checked />
+        <label for="includeUpper">Include Uppercase Letters</label>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="includeLower" checked />
+        <label for="includeLower">Include Lowercase Letters</label>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="includeNumbers" checked />
+        <label for="includeNumbers">Include Numbers</label>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="includeSymbols" />
+        <label for="includeSymbols">Include Symbols</label>
+      </div>
+
+      <label for="length">Length: <span id="lengthVal">12</span></label>
+      <input
+        type="range"
+        id="length"
+        min="4"
+        max="32"
+        value="12"
+        oninput="document.getElementById('lengthVal').innerText = this.value"
+      />
+
+      <button onclick="generatePassword()">Generate Password</button>
+      <input type="text" id="passwordOutput" readonly />
     </div>
 
-    <label for="length">Length: <span id="lengthVal">12</span></label>
-    <input type="range" id="length" min="4" max="32" value="12" oninput="document.getElementById('lengthVal').innerText = this.value">
-    
-    <button onclick="generatePassword()">Generate Password</button>
-    <input type="text" id="passwordOutput" readonly>
-  </div>
-  
-  <script>
-  const starContainer = document.getElementById('stars');
-  const numStars = 150; // You can increase this for denser star field
+    <script>
+      const starContainer = document.getElementById('stars');
+      const numStars = 150; // You can increase this for denser star field
 
-  for (let i = 0; i < numStars; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.style.top = `${Math.random() * 100}%`;
-    star.style.left = `${Math.random() * 100}%`;
-    star.style.animationDuration = `${1 + Math.random() * 2}s`;
-    starContainer.appendChild(star);
-  }
-</script>
-
-</section>
+      for (let i = 0; i < numStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.animationDuration = `${1 + Math.random() * 2}s`;
+        starContainer.appendChild(star);
+      }
+    </script>
+  </section>
 
   <script>
     function checkURL() {
@@ -320,10 +420,10 @@ html {
       let url;
 
       try {
-        url = new URL(input.startsWith("http") ? input : "http://" + input);
+        url = new URL(input.startsWith('http') ? input : 'http://' + input);
       } catch (e) {
-        resultDiv.innerHTML = "<strong>❌ Invalid URL</strong>";
-        resultDiv.className = "result unsafe";
+        resultDiv.innerHTML = '<strong>❌ Invalid URL</strong>';
+        resultDiv.className = 'result unsafe';
         return;
       }
 
@@ -335,12 +435,12 @@ html {
       const brandNames = ['paypal', 'facebook', 'google', 'microsoft', 'apple', 'amazon'];
 
       if (sketchyTLDs.includes(tld)) {
-        issues.push("Suspicious TLD: ." + tld);
+        issues.push('Suspicious TLD: .' + tld);
         score += 2;
       }
 
       if (hostname.split('.').length > 3) {
-        issues.push("Too many subdomains (may be spoofing)");
+        issues.push('Too many subdomains (may be spoofing)');
         score += 1;
       }
 
@@ -354,17 +454,17 @@ html {
       }
 
       if (hostname.length > 45 || (hostname.match(/-/g) || []).length > 3) {
-        issues.push("Unusually long or hyphenated domain");
+        issues.push('Unusually long or hyphenated domain');
         score += 1;
       }
 
       if (protocol !== 'https:') {
-        issues.push("Insecure connection (not HTTPS)");
+        issues.push('Insecure connection (not HTTPS)');
         score += 1;
       }
 
       if (/^\d{1,3}(\.\d{1,3}){3}$/.test(hostname)) {
-        issues.push("URL uses an IP address");
+        issues.push('URL uses an IP address');
         score += 3;
       }
 
@@ -376,21 +476,21 @@ html {
       let rating = '';
       let cssClass = '';
       if (score >= 5) {
-        rating = "❌ Unsafe";
-        cssClass = "unsafe";
+        rating = '❌ Unsafe';
+        cssClass = 'unsafe';
       } else if (score >= 2) {
-        rating = "⚠️ Potentially Dangerous";
-        cssClass = "potential";
+        rating = '⚠️ Potentially Dangerous';
+        cssClass = 'potential';
       } else {
-        rating = "✅ Safe";
-        cssClass = "safe";
+        rating = '✅ Safe';
+        cssClass = 'safe';
       }
 
-      resultDiv.className = "result " + cssClass;
+      resultDiv.className = 'result ' + cssClass;
       resultDiv.innerHTML = `<strong>${rating}</strong><br><br>`;
       if (issues.length > 0) {
         resultDiv.innerHTML += `<div class="issue-list"><strong>Issues detected:</strong><ul>`;
-        issues.forEach(issue => resultDiv.innerHTML += `<li>${issue}</li>`);
+        issues.forEach((issue) => (resultDiv.innerHTML += `<li>${issue}</li>`));
         resultDiv.innerHTML += `</ul></div>`;
       } else {
         resultDiv.innerHTML += `No major issues found.`;
@@ -398,31 +498,29 @@ html {
     }
 
     function generatePassword() {
-      const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      const lower = "abcdefghijklmnopqrstuvwxyz";
-      const numbers = "0123456789";
+      const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const lower = 'abcdefghijklmnopqrstuvwxyz';
+      const numbers = '0123456789';
       const symbols = "!@#$%^&*()-_=+[]{}|;:',.<>?/";
 
-      let pool = "";
+      let pool = '';
       if (document.getElementById('includeUpper').checked) pool += upper;
       if (document.getElementById('includeLower').checked) pool += lower;
       if (document.getElementById('includeNumbers').checked) pool += numbers;
       if (document.getElementById('includeSymbols').checked) pool += symbols;
 
       const length = parseInt(document.getElementById('length').value);
-      if (pool === "") {
-        alert("Please select at least one character set.");
+      if (pool === '') {
+        alert('Please select at least one character set.');
         return;
       }
 
-      let password = "";
+      let password = '';
       for (let i = 0; i < length; i++) {
         password += pool[Math.floor(Math.random() * pool.length)];
       }
       document.getElementById('passwordOutput').value = password;
     }
-    
-    
   </script>
 </body>
 </html>

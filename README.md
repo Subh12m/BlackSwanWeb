@@ -2,7 +2,7 @@
 
 # URL: https://surja15.github.io/BlackSwanWeb/
 
-**Black Swan Antivirus** is a lightweight, fast, and customizable cybersecurity tool built as a final-year project. It not only delivers a powerful real-time scanning engine but also includes useful web utilities like a **secure password generator** and a **URL safety checker**, all packaged into a clean, responsive web interface.
+**Black Swan Antivirus** is a lightweight, fast, and customizable cybersecurity tool built as a final-year project. It not only delivers a powerful real-time scanning engine but also includes useful web utilities like a **QR Code generator**, **secure password generator** and a **URL safety checker**, all packaged into a clean, responsive web interface.
 
 ## 🌐 Website Overview
 
@@ -13,7 +13,7 @@ The **Black Swan web portal** serves as a security-focused toolkit for both ever
 ### 🔑 Key Utilities
 - **🔒 Password Generator**: Create secure, complex passwords instantly.
 - **🌐 URL Safety Checker**: Verify if a link is suspicious or blacklisted.
-- **🛡️ AV Scanning Showcase**: Demonstrates how the custom engine flags suspicious files.
+- **🛡️ QR Code Generator**: Generates QR Code from any given link using qrcode.js.
 
 ---
 
@@ -54,7 +54,7 @@ Utilizes YARA’s pattern-matching capabilities to categorize files by threat le
 | `Python`       | GUI via Tkinter, rules parsing, I/O       |
 | `YARA`         | Malware signature detection and classification |
 | `HTML/CSS`     | Front-end for the Web Utilities portal    |
-| `JavaScript`   | Logic for password generation and URL check |
+| `JavaScript`   | Logic for password, QR Code generation, URL check |
 | `GitHub`       | Code hosting, open-source collaboration   |
 
 ---
@@ -68,6 +68,8 @@ Utilizes YARA’s pattern-matching capabilities to categorize files by threat le
 - **URL Safety Checker**  
   Real-time validation using threat intelligence APIs (if integrated) or regex-based detection for basic demos.
 
+- **QR Code Generator**  
+  Real-Time generation of QR Code from given link.
 ---
 
 ## 📁 Project Structure
@@ -81,6 +83,7 @@ Utilizes YARA’s pattern-matching capabilities to categorize files by threat le
 │ ├── index.html
 │ ├── style.css
 │ ├── password.js
+├ ├── QRCode.js
 │ └── url_checker.js
 ├── README.md
 

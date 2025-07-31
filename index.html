@@ -316,7 +316,12 @@
   font-weight: 500;
   transition: color 0.2s;
 }
-
+.navbar-logo {
+  height: 34px;
+  width: auto;
+  object-fit: contain;
+  margin-right: 8px;
+}
 .navbar-links a:hover {
   color: var(--highlight);
 }
@@ -358,7 +363,7 @@
 
   <header class="glass-navbar">
   <div class="navbar-left">
-    <span class="material-icons navbar-icon">auto_awesome</span>
+    <img src="logo.png" alt="Logo" class="navbar-logo">
     <span class="navbar-name">Black Swan</span>
   </div>
   <nav class="navbar-links">
